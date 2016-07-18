@@ -1,4 +1,4 @@
-function attemptAuth(event) {
+function attemptAuth (event) {
     if (event.preventDefault) {
         event.preventDefault();
     }
@@ -10,7 +10,7 @@ function attemptAuth(event) {
     }).catch(function (error) {
         if (error && error.code === 'auth/user-not-found') {
             if (password.length < 7) {
-                document.getElementById('error').textContent = 'על הסיסמה לכלול לפחות 7 תווים';
+                document.getElementById('feedback').textContent = 'על הסיסמה לכלול לפחות 7 תווים';
                 return false;
             }
 
@@ -26,7 +26,9 @@ function attemptAuth(event) {
         } else if (error) {
 
             if (error.code === 'auth/wrong-password') {
-                document.getElementById('error').textContent = 'סיסמה לא נכונה';
+                document.getElementById('feedback').textContent = 'סיסמה לא נכונה';
+            } else {
+                document.getElementById('feedback').textContent = 'התרחשה שגיאה. עשינו לוג לקונסול.';
             }
 
             console.log(error.code, error.message);
