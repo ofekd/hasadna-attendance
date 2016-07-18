@@ -37,6 +37,22 @@ function attemptAuth (event) {
     return false;
 }
 
+
+function passwordReset () {
+    var email = document.getElementById('email').value;
+    firebase.auth().sendPasswordResetEmail(email).then(function() {
+        document.getElementById('feedback').textContent = 'נשלח מייל איפוס';
+    }, function(error) {
+        if (error.code === 'auth/user-not-found') {
+            document.getElementById('feedback').textContent = 'לא נמצא משתמש עם כתובת מייל זו';
+        } else {
+            document.getElementById('feedback').textContent = 'התרחשה שגיאה. עשינו לוג לקונסול.';
+        }
+        console.log(error.code, error.message);
+    });
+
+}
+
 var form = document.getElementById('attempt-form');
 if (form.attachEvent) {
     form.attachEvent('submit', attemptAuth);
