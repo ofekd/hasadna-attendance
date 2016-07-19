@@ -30,7 +30,7 @@ function updateProfile (event) {
     if (window.location.href.indexOf('attend') > -1) {
         window.location.href = '/';
     } else {
-        alert('עודכן בהצלחה');
+        document.getElementById('feedback').textContent = 'עודכן בהצלחה';
     }
     return false;
 }
