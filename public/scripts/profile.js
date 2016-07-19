@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-function updateProfile(event) {
+function updateProfile (event) {
     if (event.preventDefault) {
         event.preventDefault();
     }
@@ -41,9 +41,9 @@ if (form.attachEvent) {
     form.addEventListener('submit', updateProfile);
 }
 
-    
+
 //Does the link refresh the pages?
-function signOut() {
+function signOut () {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
     }, function (error) {

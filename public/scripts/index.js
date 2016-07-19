@@ -20,9 +20,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-    
+
 //Does the link refresh the pages?
-function signOut() {
+function signOut () {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
     }, function (error) {
