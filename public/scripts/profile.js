@@ -6,6 +6,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmailKey = user.email.split('.').join(',');
         database.ref('/users/' + userEmailKey + '/profile').once('value').then(function (snapshot) {
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('profile-form').style.display = '';
             var profile = snapshot.val();
             var elements = document.getElementById('profile-data').elements;
             for (var i = 0; i < elements.length && profile; i++) {
