@@ -15,11 +15,7 @@ function attemptAuth (event) {
             }
 
             return firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
-                firebase.database().ref('/users/' + email.split('.').join(',')).set({
-                    uid: user.uid
-                }).then(function () {
-                    window.location.href = '/profile.html?attend';
-                });
+                window.location.href = '/profile.html?attend';
             }).catch(function (error) {
                 console.log(error.code, error.message);
             });
