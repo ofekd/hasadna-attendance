@@ -49,8 +49,16 @@
                             <label for="lastName">שם משפחה</label>
                             <input id="lastName" type="text" placeholder="שם משפחה">
 
-                            <label for="dateOfBirth">תאריך לידה</label>
-                            <input id="dateOfBirth" type="date" placeholder="תאריך לידה">
+                            <label for="project">פרוייקט</label>
+                            <select id="project">
+                                <option value="knesset">כנסת פתוחה</option>
+                                <option value="kikar">כיכר המדינה</option>
+                                <option value="budget">תקציב</option>
+                                <option value="pension">פנסיה</option>
+                                <option value="anyway">Anyway</option>
+                                <option value="none" selected>עוד לא הצטרפתי לפרוייקט</option>
+                                <option value="other">פרוייקט אחר</option>
+                            </select>
                         </fieldset>
                         <div id="feedback" style="text-align: center; font-weight:bold; font-size: 1.5em"></div>
                         <button type="submit" class="pure-button">עדכון</button>
