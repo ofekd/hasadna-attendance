@@ -1,3 +1,10 @@
+TRANSLATED_ERROR_MESSAGES = {
+    "auth/invalid-email": "אימייל לא תקין",
+    "auth/wrong-password": "סיסמה לא נכונה",
+    "auth/too-many-requests": "נשלחו יותר מדי בקשות, המתן מספר שניות עד לבקשה הבאה",
+    "auth/user-not-found" : "לא נמצא משתמש עם כתובת מייל זו"
+}
+
 function attemptAuth (event) {
     if (event.preventDefault) {
         event.preventDefault();
@@ -20,12 +27,14 @@ function attemptAuth (event) {
                 console.log(error.code, error.message);
             });
         } else if (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
 
-            if (error.code === 'auth/wrong-password') {
-                document.getElementById('feedback').textContent = 'סיסמה לא נכונה';
-            } else {
-                document.getElementById('feedback').textContent = 'התרחשה שגיאה. עשינו לוג לקונסול.';
+            if (errorCode in TRANSLATED_ERROR_MESSAGES) {
+                errorMessage = TRANSLATED_ERROR_MESSAGES[errorCode];
             }
+
+            document.getElementById('feedback').textContent = errorMessage;
 
             console.log(error.code, error.message);
         }
@@ -39,11 +48,15 @@ function passwordReset () {
     firebase.auth().sendPasswordResetEmail(email).then(function() {
         document.getElementById('feedback').textContent = 'נשלח מייל איפוס';
     }, function(error) {
-        if (error.code === 'auth/user-not-found') {
-            document.getElementById('feedback').textContent = 'לא נמצא משתמש עם כתובת מייל זו';
-        } else {
-            document.getElementById('feedback').textContent = 'התרחשה שגיאה. עשינו לוג לקונסול.';
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        if (errorCode in TRANSLATED_ERROR_MESSAGES) {
+            errorMessage = TRANSLATED_ERROR_MESSAGES[errorCode];
         }
+
+        document.getElementById('feedback').textContent = errorMessage;
+
         console.log(error.code, error.message);
     });
 

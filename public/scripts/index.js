@@ -1,3 +1,6 @@
+TRANSLATED_ERROR_MESSAGES = {
+    "PERMISSION_DENIED": "אין הרשאה",
+}
 
 var database = firebase.database();
 
@@ -5,10 +8,17 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // . (dot) is an invalid character in Firebase keys
         var userEmailKey = user.email.split('.').join(',');
-
+        
         return database.ref('/users/' + userEmailKey).once('value').then(function (snapshot) {
-            if (snapshot.val() && !snapshot.val().uid) {
+            
+            var userSnap = snapshot.val();
+
+            if (userSnap && !userSnap.uid) {
                 return firebase.database().ref('/users/' + userEmailKey).update({
+                    uid: user.uid
+                });
+            } else if (!userSnap) {
+                return firebase.database().ref('/users/' + userEmailKey).set({
                     uid: user.uid
                 });
             }
@@ -25,7 +35,16 @@ firebase.auth().onAuthStateChanged(function (user) {
         }).then(function (result) {
             document.getElementById('feedback').textContent = 'נרשמת בהצלחה!';
         }).catch(function (error) {
-            document.getElementById('feedback').textContent = 'התרחשה שגיאה. עשינו לוג לקונסול.';
+
+            var errorCode = error.code;
+            var errorMessage = 'התרחשה שגיאה. עשינו לוג לקונסול.';
+
+            if (errorCode in TRANSLATED_ERROR_MESSAGES) {
+                errorMessage = TRANSLATED_ERROR_MESSAGES[errorCode];
+            }
+
+            document.getElementById('feedback').textContent = errorMessage;
+
             console.log(error.code, error.message);
         });
     } else {
