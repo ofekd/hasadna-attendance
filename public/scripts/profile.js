@@ -27,7 +27,7 @@ function updateProfile (event) {
         values[elements[i].id] = elements[i].value;
     }
     database.ref('/users/' + userEmailKey + '/profile').set(values);
-    if (window.location.href.indexOf('attend') > -1) {
+    if (window.location.href.indexOf('?attend') > -1) {
         window.location.href = '/';
     } else {
         document.getElementById('feedback').textContent = 'עודכן בהצלחה';
