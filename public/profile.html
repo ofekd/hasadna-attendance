@@ -70,6 +70,9 @@
                             <label for="linkedin">פרופיל לינקדאין</label>
                             <input id="linkedin" type="text" placeholder="פרופיל לינקדאין">
 
+                            <label for="macAddress">כתובת MAC (עובר הצפנת bcrypt לפני שליחה)</label>
+                            <input id="macAddress" type="text" placeholder="כתובת MAC">
+
                         </fieldset>
                         <div id="feedback" style="text-align: center; font-weight:bold; font-size: 1.5em"></div>
                         <button type="submit" class="pure-button">עדכון</button>
@@ -90,6 +93,7 @@
         };
         firebase.initializeApp(config);
     </script>
+    <script src="scripts/vendors/bcrypt.min.js"></script>
     <script src="scripts/profile.js"></script>
 
 
