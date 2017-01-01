@@ -1,6 +1,7 @@
 const database = firebase.database();
 const bcrypt = dcodeIO.bcrypt;
 const macRegex = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/;
+const zeroRegex = /^0+$/;
 
 String.prototype.replaceAll = function(str1, str2, ignore) 
 {
@@ -17,7 +18,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             var profile = snapshot.val();
 
             if (profile['macAddress']) {
-                document.getElementById('macAddress').placeholder = "קיים MAC במערכת, באפשרותך להזמין MAC חדש";
+                document.getElementById('macAddress').placeholder = "קיים MAC במערכת תחת המשתמש שלך, בכדי למחוק הזנ/י \"0\" ולחצ/י על עדכון";
                 
             }
 
@@ -45,15 +46,17 @@ function updateProfile (event) {
 
     /* Hashing the mac using bcrypt before sending to firebase  */
     var macAddress = values['macAddress'];
+    var hashedMac = null;
 
-    if (macAddress) {
+    if (zeroRegex.test(macAddress)) {
+        values['macAddress'] = "";
+    } else if (macAddress) {
         if (!macRegex.test(macAddress)) {
             alert("כתובת ה MAC שהזנת לא תקנית");
             valid = false;
         } else {
-            var hashedMac = bcrypt.hashSync(macAddress, 10);
-            /* remove the chars firebase doesn't allow as a key */
-            values['macAddress'] = hashedMac.replaceAll("$","").replaceAll(".","").replaceAll("/","");
+            hashedMac = bcrypt.hashSync(macAddress, bcrypt.genSaltSync(10));
+            values['macAddress'] = hashedMac;
         }
     } else {
         delete values['macAddress'];
@@ -61,51 +64,38 @@ function updateProfile (event) {
 
     if (!valid) return false;
 
-    var profPromise = database.ref('/users/' + userEmailKey + '/profile')
-        .update(values);
+    var profPromise = database.ref('/users/' + userEmailKey + '/profile').update(values);
 
-    if (macAddress) {
-        var d = new Date();
-        var dateDateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
-        var dateJSONString = d.toJSON();
+    if (hashedMac) {
+        var dateJSONString = new Date().toJSON();
 
         profPromise
-        .then(function(res) {
-            return database.ref('/macs/' + values['macAddress'] + '/info')
-                           .update({"email" : userEmailKey, "lastUpdate" : dateJSONString});
-        })
-        .then(function(res) {
-            return database.ref('/macs/' + values['macAddress'] + "/attendance")
-                           .once("value");
-        })
-        .then(function(snap) {
-            var attendance = snap.val();
-
-            if (attendance) {
-                var updateObject = {};
-
-                for (var key in attendance) {
-                    attendance['/fakeAttendance/' + key + '/' + userEmailKey] = attendance[key];
-                    attendance['/users/' + userEmailKey + '/attended/' + key] = attendance[key];
-                    delete attendance[key];
-                }
-
-                Object.assign(updateObject, attendance);
-
-                database.ref().update(updateObject);
-            }
+        .then(function() {
+            return database.ref('/macs/' + userEmailKey)
+                           .update({"mac" : hashedMac, "createdAt" : dateJSONString});
+        });
+    } else if (zeroRegex.test(macAddress)) {
+        profPromise
+        .then(function() {
+            return database.ref('/macs/' + userEmailKey).remove();
         });
     }
 
     if (window.location.href.indexOf('?attend') > -1) {
         window.location.href = '/';
     } else {
+        var macAdressDOM = document.getElementById('macAddress');
+
         document.getElementById('feedback').textContent = 'עודכן בהצלחה';
-        if (macAddress) {
-            var macAdressDOM = document.getElementById('macAddress');
-            macAdressDOM.placeholder = "קיים MAC במערכת, באפשרותך להזמין MAC חדש"
-            macAdressDOM.value = "";
+        
+        if (hashedMac) {
+            macAdressDOM.placeholder = "קיים MAC במערכת תחת המשתמש שלך, בכדי למחוק הזנ/י \"0\" ולחצ/י על עדכון"
+            
+        } else if (macAddress) {
+            macAdressDOM.placeholder = "כתובת MAC";
         }
+
+        macAdressDOM.value = "";
     }
     return false;
 }
