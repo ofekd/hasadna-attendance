@@ -23,8 +23,13 @@ firebase.auth().onAuthStateChanged(function (user) {
                 });
             }
 
-            return true;
-        }).then(function (result) {
+            return userSnap;
+        }).then(function (userSnap) {
+            if (userSnap.profile.macAddress) {
+                document.getElementById('feedback').textContent = "הרשמתך מתבעצת באופן אוטומטי";
+                return true;
+            }
+
             var d = new Date();
             var dateDateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
             var dateJSONString = d.toJSON();
@@ -32,8 +37,8 @@ firebase.auth().onAuthStateChanged(function (user) {
             updateObject['/users/' + userEmailKey + '/attended/' + dateDateString] = dateJSONString;
             updateObject['/attendance/' + dateDateString + '/' + userEmailKey] = dateJSONString;
             return database.ref().update(updateObject);
-        }).then(function (result) {
-            document.getElementById('feedback').textContent = 'נרשמת בהצלחה!';
+        }).then(function (isAuto) {
+            if(!isAuto) document.getElementById('feedback').textContent = 'נרשמת בהצלחה!';
         }).catch(function (error) {
 
             var errorCode = error.code;
