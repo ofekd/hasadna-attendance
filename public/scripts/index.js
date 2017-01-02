@@ -19,14 +19,15 @@ firebase.auth().onAuthStateChanged(function (user) {
                 });
             } else if (!userSnap) {
                 return firebase.database().ref('/users/' + userEmailKey).set({
-                    uid: user.uid
+                    uid: user.uid,
+                    profile: {}
                 });
             }
 
             return userSnap;
         }).then(function (userSnap) {
 
-            if (userSnap.profile && userSnap.profile.macAddress) {
+            if (userSnap && userSnap.profile && userSnap.profile.macAddress) {
                 document.getElementById('feedback').textContent = "הרשמתך מתבצעת באופן אוטומטי";
                 return true;
             }
