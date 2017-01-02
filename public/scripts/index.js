@@ -25,7 +25,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             return userSnap;
         }).then(function (userSnap) {
-            if (userSnap.profile.macAddress) {
+
+            if (userSnap.profile && userSnap.profile.macAddress) {
                 document.getElementById('feedback').textContent = "הרשמתך מתבעצת באופן אוטומטי";
                 return true;
             }

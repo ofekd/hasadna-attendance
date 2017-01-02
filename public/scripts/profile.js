@@ -52,7 +52,7 @@ function updateProfile (event) {
         values['macAddress'] = "";
     } else if (macAddress) {
         if (!macRegex.test(macAddress)) {
-            alert("כתובת ה MAC שהזנת לא תקנית");
+            document.getElementById('feedback').textContent = "כתובת ה MAC שהזנת לא תקנית";
             valid = false;
         } else {
             hashedMac = bcrypt.hashSync(macAddress, bcrypt.genSaltSync(10));
