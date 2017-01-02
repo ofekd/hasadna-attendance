@@ -45,7 +45,7 @@ function updateProfile (event) {
     }
 
     /* Hashing the mac using bcrypt before sending to firebase  */
-    var macAddress = values['macAddress'];
+    var macAddress = values['macAddress'].toLocaleLowerCase();
     var hashedMac = null;
 
     if (zeroRegex.test(macAddress)) {
