@@ -1,6 +1,6 @@
 const database = firebase.database();
 const bcrypt = dcodeIO.bcrypt;
-const macRegex = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/;
+const macRegex = /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/;
 const zeroRegex = /^0+$/;
 
 String.prototype.replaceAll = function(str1, str2, ignore) 
@@ -45,7 +45,7 @@ function updateProfile (event) {
     }
 
     /* Hashing the mac using bcrypt before sending to firebase  */
-    var macAddress = values['macAddress'].toLocaleLowerCase();
+    var macAddress = values['macAddress'].toLocaleLowerCase().replaceAll("-", ":");
     var hashedMac = null;
 
     if (zeroRegex.test(macAddress)) {
