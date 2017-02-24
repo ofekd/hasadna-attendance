@@ -29,6 +29,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             if (userSnap && userSnap.profile && userSnap.profile.macAddress) {
                 document.getElementById('feedback').textContent = "הרשמתך מתבצעת באופן אוטומטי";
+                var attendBTNContainer = document.createElement('div');
+                attendBTNContainer.innerHTML = '<a href="#" onclick="attend()" id="manualAttend" class="whiteBtn">הייתי פה</a>';
+                document.getElementsByClassName('splash')[0].appendChild(attendBTNContainer);
                 return true;
             }
 
@@ -68,4 +71,24 @@ function signOut () {
     }, function (error) {
         // An error happened.
     });
+}
+
+// Attend the current user
+function attend() {
+    var user = firebase.auth().currentUser;
+    if (user) {
+        var userEmailKey = user.email.split('.').join(',');
+        var d = new Date();
+        var dateDateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
+        var dateJSONString = d.toJSON();
+        var updateObject = {};
+        updateObject['/users/' + userEmailKey + '/attended/' + dateDateString] = dateJSONString;
+        updateObject['/attendance/' + dateDateString + '/' + userEmailKey] = dateJSONString;
+        database.ref().update(updateObject).then(function() {
+            document.getElementById('feedback').textContent = "נרשמת בהצלחה!";
+            document.getElementById('manualAttend').remove();
+        }, function (error) {
+            document.getElementById('feedback').textContent = "התרחשה שגיאה. עשינו לוג לקונסול.";
+        });
+    }
 }

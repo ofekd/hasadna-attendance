@@ -280,3 +280,17 @@ a.pure-button-primary {
         font-size: 300%;
     }
 }
+
+.whiteBtn {
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #fafafa;
+    border-radius: 4px;
+    width: 150px;
+    margin: 0 auto;
+    padding: 10px 0;
+    display:block;
+    text-decoration:none;
+}
