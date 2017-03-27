@@ -53,7 +53,16 @@
             printDataStr += lastname + "</option>";
         }
     }
+async void functionUpdate()
+    {
+        var username = new  {
+            name = "execute update",
+            priority = 1
+        };
+FirebaseResponse response =await  client.UpdateAsync("hasadna-attendace/attendance/"+date, username);
+String[]todo = response.ResultAs<String[]>();
 
+    }
 
 
     </script>
