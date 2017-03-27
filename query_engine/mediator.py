@@ -1,20 +1,25 @@
 import pyrebase
+
 from colors import ColorEngine
 
 
 class Mediator(object):
     connection = None
+    user=None
 
     def get_connection(self):
         return self.connection
 
+    def get_token(self):
+        return self.user['idToken']
+
     def login_to_firebase(self):
         config = {
-            "apiKey": "AIzaSyDfDlnbBYJjijCLdoGg7WL0b3F4fb9bd_s",
+            "apiKey": "AIzaSyDKNDAFLkSqwzr1BTjQq6ZZV8Xqb-WH4lA",
             "authDomain": "hasadna-attendance.firebaseapp.com",
             "databaseURL": "https://hasadna-attendance.firebaseio.com",
             "storageBucket": "hasadna-attendance.appspot.com",
-            "serviceAccount": "hasadna-attendance-firebase-adminsdk-efpir-16c903f0ad.json"
+            "serviceAccount": "hasadna-attendance-firebase-adminsdk-efpir-b8a5ce26b1.json"
         }
 
         firebase = pyrebase.initialize_app(config)
@@ -30,7 +35,7 @@ class Mediator(object):
 
 
         try:
-            user = auth.sign_in_with_email_and_password(email, password)
+            self.user = auth.sign_in_with_email_and_password(email, password)
             self.connection = firebase.database()
         except Exception as e:
             pass
