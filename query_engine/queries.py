@@ -1,30 +1,21 @@
 import mediator
-import time
 from datetime import timedelta, datetime
 
 # count how many users volunteered N times
-def count_n_arrivals(n, num_of_weeks = 520):
+def count_n_arrivals(n):
     n = int(n)
     connection = mediator.connection.get_connection()
-    user_token = mediator.connection.get_token()
-    users = connection.child("users").get(user_token)
+    users = connection.child("users").get()
     count = 0
     for user in users.each():
         try:
-            attended = user.val().get("attended", token = user_token)
-            if user.val().get("attended", token = user_token) is not None and len(attended) >= n:
-                #count if attended in the past n weeks
-
-                curr_time = time.localtime()
-                for att in attended.each():
-                    #time format in the database is: year-month-day:Houres:Minutes:Seconds:milisecZ
-                    t = time.strptime(att.val(), "%Y-%m-%d:%H:%ML%S")
-                    t_sec = time.mktime(t)
-                    if ((time.mktime(curr_time) - t_sec) / (60*60*24*7)) <= num_of_weeks:
-                        count += 1
+            attended = user.val().get("attended")
+            if user.val().get("attended") is not None and len(attended) >= n:
+                count += 1
         except Exception as e:
             # trace error - print("Login failed, error: {0}".format(e))
             pass
+
     return count
 
 
