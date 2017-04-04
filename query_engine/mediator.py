@@ -19,7 +19,7 @@ class Mediator(object):
             "authDomain": "hasadna-attendance.firebaseapp.com",
             "databaseURL": "https://hasadna-attendance.firebaseio.com",
             "storageBucket": "hasadna-attendance.appspot.com",
-            "serviceAccount": "hasadna-attendance-firebase-adminsdk-efpir-b8a5ce26b1.json"
+            "serviceAccount": "c:/hasadna-attendance-firebase-adminsdk-efpir-b8a5ce26b1.json"
         }
 
         firebase = pyrebase.initialize_app(config)

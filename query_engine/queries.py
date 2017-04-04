@@ -7,7 +7,7 @@ def count_n_arrivals(n, num_of_weeks = 520):
     n = int(n)
     connection = mediator.connection.get_connection()
     user_token = mediator.connection.get_token()
-    users = connection.child("users").get(user_token)
+    users = connection.child("users").get(token = user_token)
     count = 0
     for user in users.each():
         try:
