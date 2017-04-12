@@ -55,12 +55,11 @@
             /*for(var j=0;j<15;j++){
                 lastNameArray[j]=query.startat(j+1(or j idk if it acts like an array or not ) & EndAt(same));
                 if(lastNameArray[j]==null){
-                    var count = j;
                     break;
                 }
              }
         */
-            for (var i=0;i < count; i++){
+            for (var i=0;i < j; i++){
                 var x = document.getElementById("Select1");
                 var option = document.createElement("option");
                 option.text = lastNamesArray[i];
