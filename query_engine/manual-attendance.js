@@ -31,18 +31,17 @@
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-    <script >
+    <script>
   
         void function page_load() {
             var config = {
                 apiKey: "<AIzaSyDfDlnbBYJjijCLdoGg7WL0b3F4fb9bd_s>",
                 authDomain: "<hasadna-attendance>.firebaseapp.com",
-                databaseURL: "https://<hasadna-attendance>.firebaseio.com",
                 storageBucket: "<hasadna-attendance>.appspot.com",
-                //messagingSenderId: "<SENDER_ID>",
-            };//ask guyziv
+                databaseURL: "https://hasadna-attendance.firebaseio.com",
+            };
             firebase.initializeApp(config);
-            firebase.database()
+           var database = firebase.database();
         }
         function getFName() {
             var fName = document.getElementById("firstName").value;
