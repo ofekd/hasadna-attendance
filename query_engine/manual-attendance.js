@@ -50,6 +50,7 @@
 
         function getLastNames() {
             var lastNamesArray = [15];
+            // guy query -123 assign
             //database query here
             /*for(var j=0;j<15;j++){
                 lastNameArray[j]=query.startat(j+1(or j idk if it acts like an array or not ) & EndAt(same));
