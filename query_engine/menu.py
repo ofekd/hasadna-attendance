@@ -10,7 +10,7 @@ def count_and_print_n_arrivals():
     n = input()
     res = queries.count_and_print_n_arrivals(n)
     ColorEngine.print('Overall {0} volunteers arrived at least {1} times:'.format(len(res), n), ColorEngine.BOLD)
-    with open('query1-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w') as file:
+    with open('query1-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w', encoding="utf-8") as file:
         for line in res:
             file.write(line)
             file.write('\n')
@@ -22,7 +22,7 @@ def count_inactive_x_weeks():
     n = input()
     res = queries.count_inactive_x_weeks(n)
     ColorEngine.print('Overall {0} volunteers were inactive for at least {1} weeks:'.format(len(res), n), ColorEngine.BOLD)
-    with open('query2-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w') as file:
+    with open('query2-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w', encoding="utf-8") as file:
         for line in res:
             file.write(line)
             file.write('\n')
@@ -33,7 +33,7 @@ def came_x_times_and_never_returned():
     n = input()
     res = queries.came_x_times_and_never_returned(n)
     ColorEngine.print('Overall {0} volunteers came {1} weeks and then never returned:'.format(len(res), n), ColorEngine.BOLD)
-    with open('query3-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w') as file:
+    with open('query3-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w', encoding="utf-8") as file:
         for line in res:
             file.write(line)
             file.write('\n')
@@ -43,7 +43,7 @@ def average_of_arrivals_in_n_weeks():
     print("Choose lower bound N indicating the last n weeks to calculate the average on: ")
     n = input()
     res = queries.average_of_arrivals_in_n_weeks(n)
-    with open('query4-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w') as file:
+    with open('query4-{0}.csv'.format(datetime.now().strftime("%Y%m%d%H%M%S")), 'w', encoding="utf-8") as file:
         for r in res:
             arrival_avg = r[1] * 100
             if arrival_avg > 100:
