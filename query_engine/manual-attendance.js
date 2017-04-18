@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- this is a javascript connecting to firebase server but there are some complitions needed -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <head>
     <meta charset="utf-8" />
     <title>manual-attendance</title>
@@ -50,22 +51,18 @@
 
         function getLastNames() {
             var lastNamesArray = [15];
+            int j=0;
             firebase.database().ref("/users").on("value", function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
                     var userKey = user.key;
                     var userValue = user.val();
                     // GUY L, here you can write the logic you need. you should have a list of users inside here (usersSnapshot) 
                     // and I added looping on these users so you can add your code HERE
+                    lastNameArray[j]=user.val().lastName;
+                    j++;
                 });
-            });            
-            //database query here
-            /*for(var j=0;j<15;j++){
-                lastNameArray[j]=query.startat(j+1(or j idk if it acts like an array or not ) & EndAt(same));
-                if(lastNameArray[j]==null){
-                    break;
-                }
-             }
-        */
+            });           
+
             for (var i=0;i < j; i++){
                 var x = document.getElementById("Select1");
                 var option = document.createElement("option");
