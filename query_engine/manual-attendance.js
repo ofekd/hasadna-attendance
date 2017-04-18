@@ -50,6 +50,14 @@
 
         function getLastNames() {
             var lastNamesArray = [15];
+            firebase.database().ref("/users").on("value", function(usersSnapshot) {
+                usersSnapshot.forEach(function(user) {
+                    var userKey = user.key;
+                    var userValue = user.val();
+                    // GUY L, here you can write the logic you need. you should have a list of users inside here (usersSnapshot) 
+                    // and I added looping on these users so you can add your code HERE
+                });
+            });            
             //database query here
             /*for(var j=0;j<15;j++){
                 lastNameArray[j]=query.startat(j+1(or j idk if it acts like an array or not ) & EndAt(same));
