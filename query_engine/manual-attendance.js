@@ -51,7 +51,7 @@
 
         function getLastNames() {
             var lastNamesArray = [15];
-            int j=0;
+            var j=0;
             firebase.database().ref("/users").on("value", function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
                     var userKey = user.key;
