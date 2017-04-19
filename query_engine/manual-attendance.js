@@ -44,26 +44,23 @@
             firebase.initializeApp(config);
            var database = firebase.database();
         }
-        function getFName() {
-            var fName = document.getElementById("firstName").value;
-            return fName;
-        }
 
         function getLastNames() {
             var lastNamesArray = [15];
             var j=0;
+            var fName = document.getElementById("firstName").value;
             firebase.database().ref("/users").on("value", function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
                     var userKey = user.key;
                     var userValue = user.val();
-                    // GUY L, here you can write the logic you need. you should have a list of users inside here (usersSnapshot) 
-                    // and I added looping on these users so you can add your code HERE
-                    lastNameArray[j]=user.val().lastName;
-                    j++;
+                    if(fName.equals(userValue.firstName)){
+                        lastNamesArray[j]=userValue.lastName;
+                        j++;
+                       }
                 });
             });           
 
-            for (var i=0;i < j; i++){
+            for (var i=0;i <= j; i++){
                 var x = document.getElementById("Select1");
                 var option = document.createElement("option");
                 option.text = lastNamesArray[i];
