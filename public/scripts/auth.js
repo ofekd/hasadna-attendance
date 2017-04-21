@@ -1,6 +1,6 @@
 TRANSLATED_ERROR_MESSAGES = {
     "auth/invalid-email": "אימייל לא תקין",
-    "auth/wrong-password": "סיסמה לא נכונה",
+    "auth/wrong-password": "סיסמה לא נכונה", in case we ever need a password engine
     "auth/too-many-requests": "נשלחו יותר מדי בקשות, המתן מספר שניות עד לבקשה הבאה",
     "auth/user-not-found" : "לא נמצא משתמש עם כתובת מייל זו"
 }
@@ -11,6 +11,9 @@ function attemptAuth (event) {
     }
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
+    if(password.equals("")){
+          password="1234567";
+       }
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function () {
         window.location.href = '/index.html';
@@ -21,7 +24,7 @@ function attemptAuth (event) {
                 return false;
             }
 
-            return firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+            return firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) { 
                 window.location.href = '/profile.html?attend';
             }).catch(function (error) {
                 console.log(error.code, error.message);
