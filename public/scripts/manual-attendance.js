@@ -9,7 +9,7 @@
            var database = firebase.database();
         }
  }
- function getLastNames() {
+function getLastNames() {
          
             var lastNamesArray = [15];
             var j=0;
@@ -30,12 +30,12 @@
                 x.add(option);
             }
         }
-function
-		var lName = document.getElementById("Select1")
+function update(){
+		var LName = document.getElementById("Select1")
 		var FName = document.getElementById("firstName")
         function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
-                   if(user.firstName === FName && user.lastName === lName){
+                   if(user.firstName === FName && user.lastName === LName){
                    var email= user.email;
                    var password = user.password;
 				   }
