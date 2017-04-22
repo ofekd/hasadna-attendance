@@ -31,8 +31,8 @@ function getLastNames() {
             }
         }
 function update(){
-		var LName = document.getElementById("Select1")
-		var FName = document.getElementById("firstName")
+		var LName = document.getElementById("Select1");
+		var FName = document.getElementById("firstName");
         function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
                    if(user.firstName === FName && user.lastName === LName){
