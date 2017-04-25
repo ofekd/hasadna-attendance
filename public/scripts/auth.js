@@ -45,7 +45,7 @@ function attemptAuth (event) {
     return false;
 }
 
-
+/*
 function passwordReset () {
     var email = document.getElementById('email').value;
     firebase.auth().sendPasswordResetEmail(email).then(function() {
@@ -64,7 +64,7 @@ function passwordReset () {
     });
 
 }
-
+*/
 var form = document.getElementById('attempt-form');
 if (form.attachEvent) {
     form.attachEvent('submit', attemptAuth);
