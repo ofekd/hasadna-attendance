@@ -1,4 +1,5 @@
  function Page_Load(){
+	 //firebase init
    var config = {
                 apiKey: "<AIzaSyDfDlnbBYJjijCLdoGg7WL0b3F4fb9bd_s>",
                 authDomain: "<hasadna-attendance>.firebaseapp.com",
@@ -17,13 +18,15 @@ function getLastNames() {
             
             firebase.database().ref("/users").on("value", function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
-                    if(user.firstName === fName)){
-                        lastNamesArray[j]=user.lastName;
+                    if(user.val().get("firstName") === fName)){
+			    //creating an array that containes all the options we want enterd to the select element
+                        lastNamesArray[j]=user.val().get("lastName");
                         j++;
                        }
                 });
             });     
             for (var i=0;i <= j; i++){
+		    // adding an option to the select element
                 var x = document.getElementById("Select1");
                 var option = document.createElement("option");
                 option.text = lastNamesArray[i];
@@ -33,18 +36,20 @@ function getLastNames() {
 function update(){
 		var LName = document.getElementById("Select1");
 		var FName = document.getElementById("firstName");
-        function(usersSnapshot) {
+	//running all the users and checking which one of them maches the name and last name
+        firebase.database().ref("/users").on("value", function(usersSnapshot) {
                 usersSnapshot.forEach(function(user) {
-                   if(user.firstName === FName && user.lastName === LName){
-                   var email= user.email;
-                   var password = user.password;
+                   if(user.val().get("firstName") === FName && user.val().get("lastName") === LName){
+                   var email= user.val().get("email");
+                   var password = user.val().get("password");
 				   }
                   });
             });     
-                 
+          //this is actually a sign in function: the user manualy entered is actually getting signed in        
         firebase.auth().signInWithEmailAndPassword(email, password)
    .then(function () {
         window.location.href = '/manual-attendance.js';
-    }).catch(function (error) {   
+    }).catch(function (error) {  
+		console.log("error with sign in");
             }
 }
