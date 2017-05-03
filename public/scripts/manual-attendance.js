@@ -26,11 +26,11 @@ function getLastNames() {
                 });
             });     
             for (var i=0;i <= j; i++){
-		    // adding an option to the select element
-                var x = document.getElementById("Select1");
-                var option = document.createElement("option");
-                option.text = lastNamesArray[i];
-                x.add(option);
+		    //jquery add a new opttion that containes a last name from the list
+		$('#mySelect').append($('<option>', {
+    value: lastNamesArray[i],
+    text: lastNamesArray[i]
+}));
             }
         }
 function update(){
