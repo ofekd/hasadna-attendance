@@ -27,7 +27,7 @@ function getLastNames() {
             });     
             for (var i=0;i <= j; i++){
 		    //jquery add a new opttion that containes a last name from the list
-		$('#mySelect').append($('<option>', {
+		$('#Select1').append($('<option>', {
     value: lastNamesArray[i],
     text: lastNamesArray[i]
 }));
