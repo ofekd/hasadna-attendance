@@ -13,13 +13,11 @@ TRANSLATED_ERROR_MESSAGES = {
     var password = document.getElementById('password').value;
     if(password===""){
           password="1234567";
-       }
-   $("#authBtn").click(function(){
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        
-    });
+       } 
+firebase.auth().signInWithEmailAndPassword(email, password)
+  
 .then(function () {
-        window.location.href = '/index.html';
+        //window.location.href = '/index.html';
     }).catch(function (error) {
         if (error && error.code === 'auth/user-not-found') {
             if (password.length < 7) {
@@ -48,7 +46,10 @@ TRANSLATED_ERROR_MESSAGES = {
 }
 });
    
-
+ $("#authBtn").click(function(){
+   window.location.href = '/index.html';
+        
+    });
 /*
 function passwordReset () {
     var email = document.getElementById('email').value;
