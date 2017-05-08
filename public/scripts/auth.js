@@ -1,6 +1,6 @@
 TRANSLATED_ERROR_MESSAGES = {
     "auth/invalid-email": "אימייל לא תקין",
-    "auth/wrong-password": "סיסמה לא נכונה", in case we ever need a password engine
+    "auth/wrong-password": "סיסמה לא נכונה", /* in case we ever need a password engine */
     "auth/too-many-requests": "נשלחו יותר מדי בקשות, המתן מספר שניות עד לבקשה הבאה",
     "auth/user-not-found" : "לא נמצא משתמש עם כתובת מייל זו"
 }
@@ -43,7 +43,6 @@ firebase.auth().signInWithEmailAndPassword(email, password)
             console.log(error.code, error.message);
         }
     return false;
-}
 });
 
 /*
@@ -64,12 +63,12 @@ function passwordReset () {
         console.log(error.code, error.message);
     });
 
-}*/
+}*//* 
 
 var form = document.getElementById('attempt-form');
 if (form.attachEvent) {
     form.attachEvent('submit', attemptAuth);
 } else {
     form.addEventListener('submit', attemptAuth);
-}
+} */
 
