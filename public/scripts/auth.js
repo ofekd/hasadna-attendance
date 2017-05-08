@@ -64,7 +64,7 @@ function passwordReset () {
         console.log(error.code, error.message);
     });
 
-}
+}*/
 
 var form = document.getElementById('attempt-form');
 if (form.attachEvent) {
@@ -72,4 +72,4 @@ if (form.attachEvent) {
 } else {
     form.addEventListener('submit', attemptAuth);
 }
-*/
+
