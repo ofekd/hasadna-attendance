@@ -16,7 +16,9 @@ TRANSLATED_ERROR_MESSAGES = {
        }
    $("#authBtn").click(function(){
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(function () {
+        
+    });
+.then(function () {
         window.location.href = '/index.html';
     }).catch(function (error) {
         if (error && error.code === 'auth/user-not-found') {
@@ -42,7 +44,6 @@ TRANSLATED_ERROR_MESSAGES = {
 
             console.log(error.code, error.message);
         }
-    });
     return false;
 }
 });
