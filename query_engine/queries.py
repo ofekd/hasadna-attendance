@@ -79,6 +79,7 @@ def came_x_times_and_never_returned(n):
 
     return count
 
+
 # helpers
 def get_last_attended(attended):
     return max(d for d in attended.values())
