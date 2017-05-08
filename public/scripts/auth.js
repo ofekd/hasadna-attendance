@@ -45,11 +45,7 @@ firebase.auth().signInWithEmailAndPassword(email, password)
     return false;
 }
 });
-   
-myFunction(){
-   window.location.href = '/index.html';
-        
-    }
+
 /*
 function passwordReset () {
     var email = document.getElementById('email').value;
