@@ -46,10 +46,10 @@ firebase.auth().signInWithEmailAndPassword(email, password)
 }
 });
    
- $("#authBtn").click(function(){
+myFunction(){
    window.location.href = '/index.html';
         
-    });
+    }
 /*
 function passwordReset () {
     var email = document.getElementById('email').value;
