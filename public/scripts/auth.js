@@ -14,7 +14,9 @@ function attemptAuth (event) {
     if(password.equals("")){
           password="1234567";
        }
+   $("#authBtn").click(function(){
     firebase.auth().signInWithEmailAndPassword(email, password)
+});
     .then(function () {
         window.location.href = '/index.html';
     }).catch(function (error) {
