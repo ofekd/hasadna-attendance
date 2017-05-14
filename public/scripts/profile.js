@@ -63,8 +63,9 @@ function updateProfile (event) {
     }
 
     if (!valid) return false;
-
-    var profPromise = database.ref('/users/' + userEmailKey + '/profile').update(values);
+	
+	
+    var profPromise = database.ref('/users/' + userEmailKey + '/profile').set(values);
 
     if (hashedMac) {
         var dateJSONString = new Date().toJSON();
@@ -72,7 +73,7 @@ function updateProfile (event) {
         profPromise
         .then(function() {
             return database.ref('/macs/' + userEmailKey)
-                           .update({"mac" : hashedMac, "createdAt" : dateJSONString});
+                           .set({"mac" : hashedMac, "createdAt" : dateJSONString});
         });
     } else if (zeroRegex.test(macAddress)) {
         profPromise
