@@ -5,10 +5,10 @@ TRANSLATED_ERROR_MESSAGES = {
     "auth/user-not-found" : "לא נמצא משתמש עם כתובת מייל זו"
 }
 
-/*function attemptAuth (event) {
+function attemptAuth (event) {
     if (event.preventDefault) {
         event.preventDefault();
-    }*/
+    }
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     if(password===""){
@@ -63,12 +63,12 @@ function passwordReset () {
         console.log(error.code, error.message);
     });
 
-}*//* 
+}*/
 
 var form = document.getElementById('attempt-form');
 if (form.attachEvent) {
     form.attachEvent('submit', attemptAuth);
 } else {
     form.addEventListener('submit', attemptAuth);
-} */
+} 
 
