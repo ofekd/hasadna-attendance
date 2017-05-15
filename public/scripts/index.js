@@ -36,11 +36,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             }
 
             var d = new Date();
-            if(d.getHours<15){
-                 var dateDateString = (d.getMonth() + 1) + '-' + d.getDate()-1 + '-' + d.getFullYear();
-            }else{
-                 var dateDateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
-            }
+            var dateDateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
             var dateJSONString = d.toJSON();
             var updateObject = {};
             updateObject['/users/' + userEmailKey + '/attended/' + dateDateString] = dateJSONString;
