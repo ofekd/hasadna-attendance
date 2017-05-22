@@ -29,9 +29,12 @@
                             <input id="email" type="email" placeholder="e.g. george@lucasfilm.com">
 
                             <label for="password">סיסמה</label>
-                            <input id="password" type="password" placeholder="לפחות 7 תווים">
+                            <input id="password" type="password" placeholder="לפחות 7 תווים"> <h5>(if you are a new user there is no need for password)</h5>
 
-                            <button type="submit" class="pure-button">הרשמה\התחברות</button>
+                            <div id="feedback" style="text-align: center; font-weight:bold; font-size: 1.5em"></div>
+                         <button type="submit" class="pure-button" id="authBtn">הרשמה\התחברות</button>
+						 <!-- <a href="index.html">הרשמה\התחברות</a>
+                           <!-- <a href="#" onclick="passwordReset()">איפוס סיסמה</a>-->
                         </fieldset>
                     </form>
                 </div>
@@ -39,17 +42,16 @@
         </div>
     </div>
 
-
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCCVM92FqXFvRCLO_taazszgBUMGwr8Tk0",
-        authDomain: "project-4442692414503669917.firebaseapp.com",
-        databaseURL: "https://project-4442692414503669917.firebaseio.com",
-        storageBucket: "",
-    };
-    firebase.initializeApp(config);
+        var config = {
+        apiKey: "AIzaSyDfDlnbBYJjijCLdoGg7WL0b3F4fb9bd_s",
+        authDomain: "hasadna-attendance.firebaseapp.com",
+        databaseURL: "https://hasadna-attendance.firebaseio.com",
+        storageBucket: "hasadna-attendance.appspot.com",
+        };
+        firebase.initializeApp(config);
     </script>
     <script src="scripts/auth.js"></script>
 

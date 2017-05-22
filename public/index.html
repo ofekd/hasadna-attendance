@@ -13,32 +13,32 @@
 <body>
     <div class="header">
         <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-            <a class="pure-menu-heading" href="">Your Site</a>
+            <a class="pure-menu-heading" href="/">הסדנה - רשם מתנדבים</a>
 
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="/profile.html" class="pure-menu-link">עדכון פרטים</a></li>
+                <li class="pure-menu-item"><a href="/profile.html" class="pure-menu-link">פרופיל</a></li>
                 <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="signOut()">התנתקות</a></li>
             </ul>
         </div>
     </div>
+	<button type="button" id="authBtn">הירשם!</button> 
 
     <div class="splash-container">
         <div class="splash">
-            <h1 id="loading" class="splash-head">רק רגע בבקשה...</h1>
-            <h1 id="success" class="splash-head" style="display: none;">נרשמת בהצלחה!</h1>
+            <h1 id="feedback" class="splash-head">רק רגע בבקשה...</h1>
         </div>
     </div>
-
+	
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCCVM92FqXFvRCLO_taazszgBUMGwr8Tk0",
-        authDomain: "project-4442692414503669917.firebaseapp.com",
-        databaseURL: "https://project-4442692414503669917.firebaseio.com",
-        storageBucket: "",
-    };
-    firebase.initializeApp(config);
+        var config = {
+        apiKey: "AIzaSyDfDlnbBYJjijCLdoGg7WL0b3F4fb9bd_s",
+        authDomain: "hasadna-attendance.firebaseapp.com",
+        databaseURL: "https://hasadna-attendance.firebaseio.com",
+        storageBucket: "hasadna-attendance.appspot.com",
+        };
+        firebase.initializeApp(config);
     </script>
     <script src="scripts/index.js"></script>
 

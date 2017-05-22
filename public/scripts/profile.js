@@ -1,4 +1,12 @@
-var database = firebase.database();
+const database = firebase.database();
+const bcrypt = dcodeIO.bcrypt;
+const macRegex = /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/;
+const zeroRegex = /^0+$/;
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+}
 
 var userEmailKey;
 firebase.auth().onAuthStateChanged(function (user) {
@@ -6,7 +14,16 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmailKey = user.email.split('.').join(',');
         database.ref('/users/' + userEmailKey + '/profile').once('value').then(function (snapshot) {
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('profile-form').style.display = '';
             var profile = snapshot.val();
+
+            if (profile['macAddress']) {
+                document.getElementById('macAddress').placeholder = "קיים MAC במערכת תחת המשתמש שלך, בכדי למחוק הזנ/י \"0\" ולחצ/י על עדכון";
+                
+            }
+
+            profile['macAddress'] = '';
+
             var elements = document.getElementById('profile-data').elements;
             for (var i = 0; i < elements.length && profile; i++) {
                 elements[i].value = profile[elements[i].id];
@@ -17,19 +34,69 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-function updateProfile(event) {
+function updateProfile (event) {
     if (event.preventDefault) {
         event.preventDefault();
     }
     var values = {}, elements = document.getElementById('profile-data').elements;
+    var valid = true;
     for (var i = 0; i < elements.length; i++) {
         values[elements[i].id] = elements[i].value;
     }
-    database.ref('/users/' + userEmailKey + '/profile').set(values);
-    if (window.location.href.indexOf('attend') > -1) {
+
+    /* Hashing the mac using bcrypt before sending to firebase  */
+    var macAddress = values['macAddress'].toLocaleLowerCase().replaceAll("-", ":");
+    var hashedMac = null;
+
+    if (zeroRegex.test(macAddress)) {
+        values['macAddress'] = "";
+    } else if (macAddress) {
+        if (!macRegex.test(macAddress)) {
+            document.getElementById('feedback').textContent = "כתובת ה MAC שהזנת לא תקנית";
+            valid = false;
+        } else {
+            hashedMac = bcrypt.hashSync(macAddress, bcrypt.genSaltSync(10));
+            values['macAddress'] = hashedMac;
+        }
+    } else {
+        delete values['macAddress'];
+    }
+
+    if (!valid) return false;
+	
+	
+    var profPromise = database.ref('/users/' + userEmailKey + '/profile').set(values);
+
+    if (hashedMac) {
+        var dateJSONString = new Date().toJSON();
+
+        profPromise
+        .then(function() {
+            return database.ref('/macs/' + userEmailKey)
+                           .set({"mac" : hashedMac, "createdAt" : dateJSONString});
+        });
+    } else if (zeroRegex.test(macAddress)) {
+        profPromise
+        .then(function() {
+            return database.ref('/macs/' + userEmailKey).remove();
+        });
+    }
+
+    if (window.location.href.indexOf('?attend') > -1) {
         window.location.href = '/';
     } else {
-        alert('עודכן בהצלחה');
+        var macAdressDOM = document.getElementById('macAddress');
+
+        document.getElementById('feedback').textContent = 'עודכן בהצלחה';
+        
+        if (hashedMac) {
+            macAdressDOM.placeholder = "קיים MAC במערכת תחת המשתמש שלך, בכדי למחוק הזנ/י \"0\" ולחצ/י על עדכון"
+            
+        } else if (macAddress) {
+            macAdressDOM.placeholder = "כתובת MAC";
+        }
+
+        macAdressDOM.value = "";
     }
     return false;
 }
@@ -41,9 +108,9 @@ if (form.attachEvent) {
     form.addEventListener('submit', updateProfile);
 }
 
-    
+
 //Does the link refresh the pages?
-function signOut() {
+function signOut () {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
     }, function (error) {

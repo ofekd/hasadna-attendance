@@ -1,0 +1,2 @@
+class InDevelopment(Exception):
+    pass
