@@ -86,6 +86,11 @@ function attend() {
         updateObject['/attendance/' + dateDateString + '/' + userEmailKey] = dateJSONString;
         database.ref().update(updateObject).then(function() {
             document.getElementById('feedback').textContent = "נרשמת בהצלחה!";
+			database.ref('/users/' + userEmailKey).once('profile', function(snapshot){
+				if(snapshot.val() == null){
+					 document.getElementById('feedback').textContent = "חסר מידע אישי, אנא עדכן בדף הפרופיל";
+				}
+			});	
             document.getElementById('manualAttend').remove();
         }, function (error) {
             document.getElementById('feedback').textContent = "התרחשה שגיאה. עשינו לוג לקונסול.";
